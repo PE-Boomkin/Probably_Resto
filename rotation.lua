@@ -66,7 +66,7 @@ ProbablyEngine.rotation.register_custom(105, "Resto", {
 
 -- Healing Touch Tier 2 Piece
 { "5185", { 
-	"player.buff(144871).count == 5", 
+	"player.buff(144871).count = 5", 
 	"lowest.health < 80",
 	"!lowest.range > 40"
 }, "lowest" },
@@ -124,7 +124,7 @@ ProbablyEngine.rotation.register_custom(105, "Resto", {
 
 -- Genesis Single Target
 { "145518", { 
-	"player.spell(18562).cooldown == 0",
+	"!player.spell(18562).cooldown = 0",
 	"lowest.health < 40", 
 	"lowest.buff(774)",
 	"!lowest.range > 40"
@@ -132,7 +132,7 @@ ProbablyEngine.rotation.register_custom(105, "Resto", {
 
 -- Genesis
 { "145518", { 
-	"player.spell(18562).cooldown == 0",
+	"!player.spell(18562).cooldown = 0",
 	"@coreHealing.needsHealing(70, 3)", 
 	"lowest.buff(774)",
 	"!lowest.range > 40"
