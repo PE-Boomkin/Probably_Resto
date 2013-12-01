@@ -159,4 +159,7 @@ ProbablyEngine.rotation.register_custom(105, "Resto", {
 	"!lowest.range > 40"
 }, "lowest" },
 
+}, {
+-- Focus Macro - Out Of Combat
+{ "!/focus [target=mouseover]", "modifier.lcontrol" },
 })
