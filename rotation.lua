@@ -15,10 +15,16 @@ ProbablyEngine.library.register('coreHealing', {
 -- Custom Resto Druid Rotation v0.1
 -- Updated on Nov 29th
 
-ProbablyEngine.rotation.register_custom(105, "Resto", {
+ProbablyEngine.rotation.register_custom(105, "Boomkin Resto Druid", {
 
 -- Pause Rotation
 { "pause", "modifier.lalt" },
+
+-- Pause Rotation - Bear Form
+{ "pause", "player.seal = 1" },
+
+-- Pause Rotation - Cat Form
+{ "pause", "player.seal = 3" },
 
 -- Focus Macro
 { "!/focus [target=mouseover]", "modifier.lcontrol" },
@@ -31,6 +37,44 @@ ProbablyEngine.rotation.register_custom(105, "Resto", {
 
 -- Innervate
 { "29166", "player.mana < 80", "player" },
+
+-- Dispel - Click Toggle To Enable - 5.4 Content
+{ "88423", {
+	"toggle.dispel",
+	"@coreHealing.needsDispelled('Aqua Bomb')" -- Aqua Bomb (Proving Grounds)
+}},
+{ "88423", {
+	"toggle.dispel",
+	"@coreHealing.needsDispelled('Shadow Word: Bane')" -- Shadow Word: Bane (Fallen Protectors)
+}},
+{ "88423", {
+	"toggle.dispel",
+	"@coreHealing.needsDispelled('Lingering Corruption')" -- Lingering Corruption (Norushen)
+}},
+{ "88423", {
+	"toggle.dispel",
+	"player.buff(144364)",
+	"@coreHealing.needsDispelled('Mark of Arrogance')" -- Mark of Arrogance (Sha of Pride)
+}},
+{ "88423", {
+	"toggle.dispel",
+	"@coreHealing.needsDispelled('Corrosive Blood')" -- Corrosive Blood (Thok)
+}},
+
+-- Mouse Over Healing For Blobs and Other SoO NPCs. Note This Will Healing Anything So Use The Toggle To Disable When Not Needed
+{ "8936", { 
+	"toggle.mouseover", 
+	"!mouseover.buff(8936)", 
+	"mouseover.health < 100",
+	"!mouseover.range > 40"
+}, "mouseover" },
+
+{ "5185", { 
+	"toggle.mouseover", 
+	"mouseover.buff(8936)", 
+	"mouseover.health < 100",
+	"!mouseover.range > 40"
+}, "mouseover" },
 
 -- Incarnation Regrowth Clearcasting
 { "8936", { 
@@ -162,4 +206,9 @@ ProbablyEngine.rotation.register_custom(105, "Resto", {
 }, {
 -- Focus Macro - Out Of Combat
 { "!/focus [target=mouseover]", "modifier.lcontrol" },
-})
+
+}, function()
+ProbablyEngine.toggle.create('dispel', 'Interface\\Icons\\ability_shaman_cleansespirit', 'Dispel', 'Toggle Dispel')
+ProbablyEngine.toggle.create('mouseover', 'Interface\\Icons\\spell_nature_resistnature', 'Mouseover Regrowth', 'Toggle Mouseover Regrowth For SoO NPC Healing')
+
+end)
